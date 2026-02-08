@@ -37,14 +37,14 @@ export default function RecentActivity({ activities, stakeholders }: Props) {
         </h3>
         <Link
           href="/timeline"
-          className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+          className="text-xs text-indigo-600 hover:text-indigo-700 font-medium btn-press"
         >
           View all
         </Link>
       </div>
 
       <div className="space-y-3">
-        {sorted.map((activity) => {
+        {sorted.map((activity, index) => {
           const Icon = typeIcons[activity.type];
           const color = typeColors[activity.type];
           const names = activity.stakeholderIds
@@ -55,7 +55,11 @@ export default function RecentActivity({ activities, stakeholders }: Props) {
             .join(", ");
 
           return (
-            <div key={activity.id} className="flex items-start gap-3">
+            <div
+              key={activity.id}
+              className="flex items-start gap-3"
+              style={{ animation: `fadeUp 0.4s ease-out ${index * 0.06}s both` }}
+            >
               <div className={`p-1.5 rounded-lg flex-shrink-0 ${color}`}>
                 <Icon className="w-3.5 h-3.5" />
               </div>

@@ -75,14 +75,19 @@ export default function Dashboard() {
   if (loading || !activeWorkspace) {
     return (
       <div className="p-8">
-        <div className="animate-pulse space-y-6">
-          <div className="h-8 w-48 bg-slate-200 rounded" />
-          <div className="h-4 w-80 bg-slate-100 rounded" />
+        <div className="space-y-6">
+          <div className="h-8 w-48 animate-shimmer rounded" />
+          <div className="h-4 w-80 animate-shimmer rounded" />
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-24 bg-slate-100 rounded-xl" />
+              <div key={i} className="h-24 animate-shimmer rounded-xl" />
             ))}
           </div>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="h-48 animate-shimmer rounded-xl" />
+            <div className="h-48 animate-shimmer rounded-xl" />
+          </div>
+          <div className="h-64 animate-shimmer rounded-xl" />
         </div>
       </div>
     );
@@ -92,7 +97,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-8">
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-up">
         <h1 className="text-2xl font-bold text-slate-900">Deal Dashboard</h1>
         <p className="text-sm text-slate-500 mt-1">
           {activeWorkspace.name} &middot; {activeWorkspace.description} &middot;{" "}
@@ -100,13 +105,23 @@ export default function Dashboard() {
         </p>
       </div>
       <div className="space-y-6">
-        <QuickStats stakeholders={stakeholders} />
-        <div className="grid grid-cols-2 gap-6">
-          <DealHealthScore score={score} factors={factors} />
-          <CriticalAlerts stakeholders={stakeholders} />
+        <div className="animate-fade-up stagger-1">
+          <QuickStats stakeholders={stakeholders} />
         </div>
-        <CoverageMap stakeholders={stakeholders} />
-        <RecentActivity activities={activities} stakeholders={stakeholders} />
+        <div className="grid grid-cols-2 gap-6">
+          <div className="animate-fade-up stagger-2">
+            <DealHealthScore score={score} factors={factors} />
+          </div>
+          <div className="animate-fade-up stagger-3">
+            <CriticalAlerts stakeholders={stakeholders} />
+          </div>
+        </div>
+        <div className="animate-fade-up stagger-4">
+          <CoverageMap stakeholders={stakeholders} />
+        </div>
+        <div className="animate-fade-up stagger-5">
+          <RecentActivity activities={activities} stakeholders={stakeholders} />
+        </div>
       </div>
     </div>
   );

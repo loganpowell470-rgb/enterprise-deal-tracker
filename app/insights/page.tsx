@@ -142,11 +142,15 @@ export default function InsightsPage() {
     setSlackUpdate(update);
   };
 
+  const [showToast, setShowToast] = useState(false);
+
   const copySlackUpdate = async () => {
     if (!slackUpdate) return;
     await navigator.clipboard.writeText(slackUpdate);
     setCopied(true);
+    setShowToast(true);
     setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setShowToast(false), 2500);
   };
 
   const severityIcon = (severity: string) => {
@@ -199,8 +203,16 @@ export default function InsightsPage() {
   };
 
   return (
-    <div className="p-8 max-w-4xl">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-8 max-w-4xl relative">
+      {/* Copy toast */}
+      {showToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 text-sm font-medium animate-toast-in">
+          <Check className="w-4 h-4 text-emerald-400" />
+          Copied to clipboard
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mb-6 animate-fade-up">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
             <Brain className="w-6 h-6 text-indigo-600" />
@@ -255,7 +267,7 @@ export default function InsightsPage() {
           </p>
           <button
             onClick={runAnalysis}
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors btn-press"
           >
             <Brain className="w-4 h-4" />
             Generate Insights
@@ -366,6 +378,7 @@ export default function InsightsPage() {
                   <div
                     key={i}
                     className={`rounded-xl border p-5 ${severityBg(insight.severity)}`}
+                    style={{ animation: `fadeUp 0.4s ease-out ${i * 0.08}s both` }}
                   >
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 mt-0.5">

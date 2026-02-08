@@ -120,11 +120,21 @@ export default function CriticalAlerts({ stakeholders }: Props) {
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">
-          Critical Alerts
-        </h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">
+            Critical Alerts
+          </h3>
+          {criticalCount > 0 && (
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
+            </span>
+          )}
+        </div>
         {criticalCount > 0 && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+          <span
+            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700 animate-scale-in"
+          >
             {criticalCount} critical
           </span>
         )}
@@ -155,13 +165,14 @@ export default function CriticalAlerts({ stakeholders }: Props) {
             <div
               key={i}
               className={`flex items-start gap-2.5 p-3 rounded-lg border text-sm ${colors}`}
+              style={{ animation: `slideInLeft 0.4s ease-out ${i * 0.06}s both` }}
             >
               <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${iconColor}`} />
               <span className="flex-1">{alert.message}</span>
               {alert.stakeholderId && (
                 <Link
                   href={`/stakeholders/${alert.stakeholderId}`}
-                  className="flex-shrink-0 opacity-60 hover:opacity-100"
+                  className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity"
                 >
                   <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -173,7 +184,7 @@ export default function CriticalAlerts({ stakeholders }: Props) {
 
       <Link
         href="/insights"
-        className="flex items-center gap-1 mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+        className="flex items-center gap-1 mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium btn-press"
       >
         View AI-powered insights
         <ArrowRight className="w-3.5 h-3.5" />

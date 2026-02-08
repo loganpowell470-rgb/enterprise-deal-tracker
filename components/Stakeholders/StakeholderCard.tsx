@@ -7,6 +7,7 @@ import Link from "next/link";
 
 interface Props {
   stakeholder: Stakeholder;
+  index?: number;
 }
 
 const roleColors: Record<string, string> = {
@@ -40,7 +41,7 @@ const priorityColors: Record<string, string> = {
   P2: "bg-slate-400 text-white",
 };
 
-export default function StakeholderCard({ stakeholder: s }: Props) {
+export default function StakeholderCard({ stakeholder: s, index = 0 }: Props) {
   const days = daysSince(s.lastContactDate);
   const daysLabel = days === null ? "Never" : `${days}d ago`;
   const isOverdue = days === null || days > 30;
@@ -48,11 +49,12 @@ export default function StakeholderCard({ stakeholder: s }: Props) {
   return (
     <Link
       href={`/stakeholders/${s.id}`}
-      className="block bg-white rounded-xl border border-slate-200 p-4 hover:border-indigo-300 hover:shadow-md transition-all group"
+      className="block bg-white rounded-xl border border-slate-200 p-4 card-hover group"
+      style={{ animation: `fadeUp 0.4s ease-out ${index * 0.05}s both` }}
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-sm">
+          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-sm transition-transform group-hover:scale-110">
             {s.name
               .split(" ")
               .map((n) => n[0])

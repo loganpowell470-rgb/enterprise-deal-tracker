@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+
 interface Factor {
   label: string;
   impact: number;
@@ -11,7 +13,39 @@ interface Props {
   factors: Factor[];
 }
 
+function useCountUp(target: number, duration = 1200) {
+  const [value, setValue] = useState(0);
+  const startRef = useRef<number | null>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    startRef.current = null;
+
+    const animate = (timestamp: number) => {
+      if (startRef.current === null) startRef.current = timestamp;
+      const elapsed = timestamp - startRef.current;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * target));
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, duration]);
+
+  return value;
+}
+
 export default function DealHealthScore({ score, factors }: Props) {
+  const displayScore = useCountUp(score, 1400);
+
   const getColor = (s: number) => {
     if (s >= 80) return { ring: "text-emerald-500", bg: "bg-emerald-500", label: "Healthy" };
     if (s >= 60) return { ring: "text-amber-500", bg: "bg-amber-500", label: "Needs Attention" };
@@ -21,7 +55,7 @@ export default function DealHealthScore({ score, factors }: Props) {
 
   const color = getColor(score);
   const circumference = 2 * Math.PI * 54;
-  const strokeDashoffset = circumference - (score / 100) * circumference;
+  const strokeDashoffset = circumference - (displayScore / 100) * circumference;
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-6">
@@ -51,24 +85,28 @@ export default function DealHealthScore({ score, factors }: Props) {
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={strokeDashoffset}
-              style={{ transition: "stroke-dashoffset 1s ease" }}
+              style={{ transition: "stroke-dashoffset 0.1s ease" }}
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-3xl font-bold text-slate-900">{score}</span>
+            <span className="text-3xl font-bold text-slate-900 tabular-nums">{displayScore}</span>
             <span className="text-xs text-slate-500">/100</span>
           </div>
         </div>
 
         <div className="flex-1 min-w-0">
           <div
-            className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium text-white ${color.bg} mb-3`}
+            className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium text-white ${color.bg} mb-3 animate-scale-in`}
           >
             {color.label}
           </div>
           <div className="space-y-2">
             {factors.slice(0, 4).map((f, i) => (
-              <div key={i} className="flex items-center justify-between text-sm">
+              <div
+                key={i}
+                className="flex items-center justify-between text-sm"
+                style={{ animation: `fadeUp 0.4s ease-out ${0.4 + i * 0.08}s both` }}
+              >
                 <span className="text-slate-600 truncate mr-2">{f.label}</span>
                 <span
                   className={`font-medium flex-shrink-0 ${

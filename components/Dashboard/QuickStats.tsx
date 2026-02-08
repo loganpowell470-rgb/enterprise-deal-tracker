@@ -71,22 +71,31 @@ export default function QuickStats({ stakeholders }: Props) {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      {stats.map((stat) => {
+      {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
           <div
             key={stat.label}
-            className="bg-white rounded-xl border border-slate-200 p-4"
+            className="bg-white rounded-xl border border-slate-200 p-4 card-hover"
+            style={{ animation: `fadeUp 0.5s ease-out ${index * 0.08}s both` }}
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
                 {stat.label}
               </span>
-              <div className={`p-2 rounded-lg ${stat.color}`}>
+              <div
+                className={`p-2 rounded-lg ${stat.color}`}
+                style={{ animation: `scaleIn 0.3s ease-out ${0.3 + index * 0.08}s both` }}
+              >
                 <Icon className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
+            <p
+              className="text-2xl font-bold text-slate-900"
+              style={{ animation: `countFadeIn 0.5s ease-out ${0.2 + index * 0.05}s both` }}
+            >
+              {stat.value}
+            </p>
             <p className="text-xs text-slate-500 mt-1">{stat.detail}</p>
           </div>
         );

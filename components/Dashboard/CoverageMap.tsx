@@ -47,7 +47,7 @@ export default function CoverageMap({ stakeholders }: Props) {
             </tr>
           </thead>
           <tbody>
-            {teams.map((team) => {
+            {teams.map((team, rowIndex) => {
               const members = stakeholders.filter((s) => s.team === team);
               const engaged = members.filter((s) => {
                 const d = daysSince(s.lastContactDate);
@@ -82,7 +82,11 @@ export default function CoverageMap({ stakeholders }: Props) {
               }
 
               return (
-                <tr key={team} className="border-b border-slate-100">
+                <tr
+                  key={team}
+                  className="border-b border-slate-100"
+                  style={{ animation: `rowFadeIn 0.4s ease-out ${rowIndex * 0.06}s both` }}
+                >
                   <td className="py-3 pr-4">
                     <span className="font-medium text-slate-900">{team}</span>
                   </td>
@@ -116,7 +120,7 @@ export default function CoverageMap({ stakeholders }: Props) {
                           return (
                             <span
                               key={m.id}
-                              className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium ${
+                              className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-medium transition-all hover:scale-105 ${
                                 isEngaged
                                   ? "bg-slate-100 text-slate-700"
                                   : "bg-red-50 text-red-600 ring-1 ring-red-200"

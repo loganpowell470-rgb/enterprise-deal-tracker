@@ -179,7 +179,7 @@ export default function Navigation() {
           <button
             onClick={logout}
             title="Sign out"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-all btn-press"
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -201,13 +201,13 @@ export default function Navigation() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all btn-press ${
                 isActive
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
                   : "text-slate-300 hover:bg-slate-800 hover:text-white"
               }`}
             >
-              <Icon className="w-[18px] h-[18px]" />
+              <Icon className={`w-[18px] h-[18px] transition-transform ${isActive ? "" : "group-hover:scale-110"}`} />
               {item.label}
             </Link>
           );
@@ -218,7 +218,7 @@ export default function Navigation() {
       <div className="relative p-4 border-t border-slate-700" ref={switcherRef}>
         {/* Workspace List Popover */}
         {showSwitcher && (
-          <div className="absolute bottom-full left-4 right-4 mb-2 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-full left-4 right-4 mb-2 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden animate-slide-up">
             <div className="px-4 py-3 border-b border-slate-700">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                 Switch Workspace
@@ -270,7 +270,7 @@ export default function Navigation() {
 
         {/* Create Workspace Form Popover */}
         {showCreateForm && (
-          <div className="absolute bottom-full left-4 right-4 mb-2 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-full left-4 right-4 mb-2 bg-slate-800 border border-slate-600 rounded-xl shadow-2xl overflow-hidden animate-slide-up">
             <div className="px-4 py-3 border-b border-slate-700 flex items-center justify-between">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                 New Workspace
@@ -452,7 +452,7 @@ export default function Navigation() {
               setShowSwitcher(!showSwitcher);
             }
           }}
-          className="w-full bg-slate-800 rounded-lg p-3 text-left hover:bg-slate-700 transition-colors group"
+          className="w-full bg-slate-800 rounded-lg p-3 text-left hover:bg-slate-700 transition-all btn-press group"
         >
           <div className="flex items-center justify-between">
             <div className="min-w-0 flex-1">

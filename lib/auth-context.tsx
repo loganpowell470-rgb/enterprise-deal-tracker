@@ -166,6 +166,87 @@ function HyperspaceAnimation({ onComplete }: { onComplete: () => void }) {
   );
 }
 
+// --- Ambient Star Particles for Login ---
+function AmbientStars() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const PARTICLE_COUNT = 60;
+    const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 0.5,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: -Math.random() * 0.4 - 0.1,
+      opacity: Math.random() * 0.5 + 0.1,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      twinkleOffset: Math.random() * Math.PI * 2,
+    }));
+
+    let raf: number;
+
+    const draw = (now: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        // Wrap around
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+
+        const twinkle = Math.sin(now * p.twinkleSpeed + p.twinkleOffset) * 0.3 + 0.7;
+        const alpha = p.opacity * twinkle;
+
+        // Draw star with subtle glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(148, 163, 184, ${alpha})`;
+        ctx.fill();
+
+        // Soft glow on larger stars
+        if (p.size > 1.2) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${alpha * 0.1})`;
+          ctx.fill();
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+
+    raf = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 0 }}
+    />
+  );
+}
+
 // --- Main Auth Provider ---
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -239,11 +320,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Login screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-sm">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Ambient star particles */}
+        <AmbientStars />
+
+        {/* Subtle radial gradient behind card */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at center, rgba(99, 102, 241, 0.08) 0%, transparent 60%)",
+          }}
+        />
+
+        <div className="w-full max-w-sm relative z-10">
           {/* Logo & Title */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 mb-4">
+          <div className="text-center mb-8" style={{ animation: "fadeUp 0.6s ease-out both" }}>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 mb-4 shadow-lg shadow-indigo-500/10">
               <Target className="w-8 h-8 text-indigo-400" />
             </div>
             <h1 className="text-2xl font-bold text-white">Deal Command Center</h1>
@@ -254,7 +346,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
           {/* Login Card */}
           <form onSubmit={handleSubmit}>
-            <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl">
+            <div
+              className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 space-y-4 shadow-2xl"
+              style={{ animation: "fadeUp 0.6s ease-out 0.15s both" }}
+            >
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1.5">
                   Password
@@ -278,20 +373,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                   />
                 </div>
                 {error && (
-                  <p className="text-xs text-red-400 mt-1.5">{error}</p>
+                  <p className="text-xs text-red-400 mt-1.5" style={{ animation: "fadeUp 0.3s ease-out both" }}>
+                    {error}
+                  </p>
                 )}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm py-2.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm py-2.5 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 btn-press"
               >
                 Sign In
               </button>
             </div>
           </form>
 
-          <p className="text-center text-[11px] text-slate-600 mt-6">
+          <p
+            className="text-center text-[11px] text-slate-600 mt-6"
+            style={{ animation: "fadeUp 0.5s ease-out 0.3s both" }}
+          >
             Protected workspace access
           </p>
         </div>

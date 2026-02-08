@@ -102,15 +102,30 @@ export default function TimelinePage() {
 
   if (loading) {
     return (
-      <div className="p-8 flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+      <div className="p-8 max-w-4xl">
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="h-8 w-52 animate-shimmer rounded" />
+              <div className="h-4 w-40 animate-shimmer rounded mt-2" />
+            </div>
+            <div className="h-10 w-36 animate-shimmer rounded-lg" />
+          </div>
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="space-y-3">
+              <div className="h-4 w-32 animate-shimmer rounded" />
+              <div className="h-24 animate-shimmer rounded-xl" />
+              <div className="h-24 animate-shimmer rounded-xl" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="p-8 max-w-4xl">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 animate-fade-up">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
             <Clock className="w-6 h-6 text-indigo-600" />
@@ -122,7 +137,7 @@ export default function TimelinePage() {
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors btn-press"
         >
           {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {showForm ? "Cancel" : "Log Activity"}
@@ -132,7 +147,7 @@ export default function TimelinePage() {
       {showForm && (
         <form
           onSubmit={handleAdd}
-          className="bg-white rounded-xl border border-slate-200 p-5 mb-6 space-y-4"
+          className="bg-white rounded-xl border border-slate-200 p-5 mb-6 space-y-4 animate-slide-up"
         >
           <h3 className="font-semibold text-slate-900">Log New Activity</h3>
           <div className="grid grid-cols-3 gap-4">
@@ -250,8 +265,11 @@ export default function TimelinePage() {
       </div>
 
       <div className="space-y-6">
-        {Object.entries(grouped).map(([date, acts]) => (
-          <div key={date}>
+        {Object.entries(grouped).map(([date, acts], groupIndex) => (
+          <div
+            key={date}
+            style={{ animation: `fadeUp 0.5s ease-out ${groupIndex * 0.1}s both` }}
+          >
             <div className="flex items-center gap-3 mb-3">
               <span className="text-sm font-semibold text-slate-900">
                 {formatDate(date)}
@@ -262,7 +280,7 @@ export default function TimelinePage() {
               </span>
             </div>
             <div className="space-y-3 ml-2">
-              {acts.map((activity) => {
+              {acts.map((activity, actIndex) => {
                 const Icon = typeIcons[activity.type];
                 const color = typeColors[activity.type];
                 const names = activity.stakeholderIds.map((id) => {
@@ -273,7 +291,8 @@ export default function TimelinePage() {
                 return (
                   <div
                     key={activity.id}
-                    className="flex items-start gap-3 bg-white rounded-xl border border-slate-200 p-4"
+                    className="flex items-start gap-3 bg-white rounded-xl border border-slate-200 p-4 card-hover"
+                    style={{ animation: `fadeUp 0.4s ease-out ${groupIndex * 0.1 + actIndex * 0.05}s both` }}
                   >
                     <div
                       className={`p-2 rounded-lg border flex-shrink-0 ${color}`}
