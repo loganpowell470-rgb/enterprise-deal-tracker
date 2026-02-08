@@ -21,12 +21,14 @@ export default function QuickStats({ stakeholders }: Props) {
       .map((s) => s.team)
   );
 
-  const avgDaysSinceContact = Math.round(
-    stakeholders.reduce((sum, s) => {
-      const d = daysSince(s.lastContactDate);
-      return sum + (d ?? 90);
-    }, 0) / stakeholders.length
-  );
+  const avgDaysSinceContact = stakeholders.length > 0
+    ? Math.round(
+        stakeholders.reduce((sum, s) => {
+          const d = daysSince(s.lastContactDate);
+          return sum + (d ?? 90);
+        }, 0) / stakeholders.length
+      )
+    : 0;
 
   const atRiskCount = stakeholders.filter(
     (s) =>

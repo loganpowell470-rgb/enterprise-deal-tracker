@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStakeholder, updateStakeholder, deleteStakeholder } from "@/lib/data";
 
+function getWorkspaceId(request: NextRequest): string {
+  return request.nextUrl.searchParams.get("workspace") || "ai-labs";
+}
+
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const workspaceId = getWorkspaceId(request);
   const { id } = await params;
-  const stakeholder = getStakeholder(id);
+  const stakeholder = getStakeholder(workspaceId, id);
   if (!stakeholder) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
@@ -17,9 +22,10 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const workspaceId = getWorkspaceId(request);
   const { id } = await params;
   const body = await request.json();
-  const updated = updateStakeholder(id, body);
+  const updated = updateStakeholder(workspaceId, id, body);
   if (!updated) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
@@ -27,11 +33,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const workspaceId = getWorkspaceId(request);
   const { id } = await params;
-  const success = deleteStakeholder(id);
+  const success = deleteStakeholder(workspaceId, id);
   if (!success) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }

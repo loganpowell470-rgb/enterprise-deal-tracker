@@ -1,12 +1,18 @@
-import { NextResponse } from "next/server";
-import { getStakeholders, getActivities } from "@/lib/data";
+import { NextRequest, NextResponse } from "next/server";
+import { getStakeholders, getActivities, getWorkspace } from "@/lib/data";
 import { generateInsights } from "@/lib/claude";
 
-export async function POST() {
+function getWorkspaceId(request: NextRequest): string {
+  return request.nextUrl.searchParams.get("workspace") || "ai-labs";
+}
+
+export async function POST(request: NextRequest) {
   try {
-    const stakeholders = getStakeholders();
-    const activities = getActivities();
-    const result = await generateInsights(stakeholders, activities);
+    const workspaceId = getWorkspaceId(request);
+    const stakeholders = getStakeholders(workspaceId);
+    const activities = getActivities(workspaceId);
+    const workspace = getWorkspace(workspaceId);
+    const result = await generateInsights(stakeholders, activities, workspace);
 
     // Strip markdown code blocks if present, then parse JSON
     let cleaned = result.trim();

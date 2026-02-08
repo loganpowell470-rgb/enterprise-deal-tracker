@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { Stakeholder, Activity } from "./types";
+import { Stakeholder, Activity, ActivityType, Workspace, TEAMS, DEAL_ROLES, PRIORITIES, RELATIONSHIP_STRENGTHS } from "./types";
 import { daysSince } from "./data";
 import fs from "fs";
 import path from "path";
@@ -29,7 +29,8 @@ function getClient() {
 
 function buildStakeholderContext(
   stakeholders: Stakeholder[],
-  activities: Activity[]
+  activities: Activity[],
+  workspace?: Workspace
 ): string {
   const stakeholderSummary = stakeholders
     .map((s) => {
@@ -51,8 +52,12 @@ function buildStakeholderContext(
     })
     .join("\n");
 
-  return `ACCOUNT: AI Labs Inc. (Enterprise AI Platform Account)
-DEAL CONTEXT: Renewal and expansion deal. Currently at ~$400K ARR, targeting $1M ARR expansion. Renewal window in ~60 days.
+  const accountName = workspace?.name || "AI Labs Inc.";
+  const accountDesc = workspace?.description || "Enterprise AI Platform Account";
+  const dealCtx = workspace?.dealContext || "Renewal and expansion deal. Currently at ~$400K ARR, targeting $1M ARR expansion. Renewal window in ~60 days.";
+
+  return `ACCOUNT: ${accountName} (${accountDesc})
+DEAL CONTEXT: ${dealCtx}
 
 STAKEHOLDERS (${stakeholders.length} total):
 ${stakeholderSummary}
@@ -75,9 +80,10 @@ ${Array.from(new Set(stakeholders.map((s) => s.team)))
 
 export async function generateInsights(
   stakeholders: Stakeholder[],
-  activities: Activity[]
+  activities: Activity[],
+  workspace?: Workspace
 ): Promise<string> {
-  const context = buildStakeholderContext(stakeholders, activities);
+  const context = buildStakeholderContext(stakeholders, activities, workspace);
 
   const message = await getClient().messages.create({
     model: "claude-sonnet-4-5-20250929",
@@ -125,12 +131,13 @@ export async function generateMeetingPrep(
   stakeholders: Stakeholder[],
   selectedIds: string[],
   activities: Activity[],
-  meetingContext?: string
+  meetingContext?: string,
+  workspace?: Workspace
 ): Promise<string> {
   const selectedStakeholders = stakeholders.filter((s) =>
     selectedIds.includes(s.id)
   );
-  const allContext = buildStakeholderContext(stakeholders, activities);
+  const allContext = buildStakeholderContext(stakeholders, activities, workspace);
 
   const attendeeDetails = selectedStakeholders
     .map((s) => {
@@ -210,4 +217,148 @@ Be specific, use names, reference actual data points and history. Make it immedi
 
   const textBlock = message.content.find((block) => block.type === "text");
   return textBlock?.text || "";
+}
+
+export function findStakeholderMatch(
+  extractedName: string,
+  existingStakeholders: Stakeholder[]
+): { id: string; confidence: number } | null {
+  const normalize = (s: string) => s.toLowerCase().trim();
+  const extracted = normalize(extractedName);
+
+  for (const s of existingStakeholders) {
+    const existing = normalize(s.name);
+
+    if (extracted === existing) {
+      return { id: s.id, confidence: 100 };
+    }
+
+    const extractedParts = extracted.split(/\s+/);
+    const existingParts = existing.split(/\s+/);
+
+    // Full first + last name match with different middle/suffix
+    if (
+      extractedParts.length > 1 &&
+      existingParts.length > 1 &&
+      extractedParts[0] === existingParts[0] &&
+      extractedParts[extractedParts.length - 1] === existingParts[existingParts.length - 1]
+    ) {
+      return { id: s.id, confidence: 95 };
+    }
+
+    // First name only match
+    if (
+      extractedParts[0] === existingParts[0] &&
+      (extractedParts.length === 1 || existingParts.length === 1)
+    ) {
+      return { id: s.id, confidence: 75 };
+    }
+
+    // Last name match
+    if (
+      extractedParts.length > 1 &&
+      existingParts.length > 1 &&
+      extractedParts[extractedParts.length - 1] === existingParts[existingParts.length - 1]
+    ) {
+      return { id: s.id, confidence: 60 };
+    }
+
+    // Check if either name contains the other
+    if (existing.includes(extracted) || extracted.includes(existing)) {
+      return { id: s.id, confidence: 70 };
+    }
+  }
+
+  return null;
+}
+
+export async function parseTranscript(
+  transcript: string,
+  sourceType: ActivityType,
+  existingStakeholders: Stakeholder[],
+  teams?: string[]
+): Promise<string> {
+  const existingList = existingStakeholders
+    .map((s) => `- ${s.name} (${s.title}, ${s.team}, ${s.role})`)
+    .join("\n");
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const message = await getClient().messages.create({
+    model: "claude-sonnet-4-5-20250929",
+    max_tokens: 4000,
+    messages: [
+      {
+        role: "user",
+        content: `You are an expert enterprise sales analyst. Parse the following ${sourceType.toLowerCase()} transcript/content and extract structured intelligence about stakeholders, action items, and relationship signals.
+
+EXISTING STAKEHOLDERS IN OUR SYSTEM:
+${existingList || "(none)"}
+
+VALID VALUES FOR FIELDS:
+- Teams: ${(teams && teams.length > 0 ? teams : TEAMS).join(", ")}
+- Deal Roles: ${DEAL_ROLES.join(", ")}
+- Priorities: ${PRIORITIES.join(", ")}
+- Relationship Strengths: ${RELATIONSHIP_STRENGTHS.join(", ")}
+
+TODAY'S DATE: ${today}
+
+TRANSCRIPT/CONTENT:
+---
+${transcript}
+---
+
+Extract the following and return as JSON:
+
+{
+  "stakeholders": [
+    {
+      "name": "Full Name",
+      "title": "Job Title (infer if not explicit)",
+      "team": "One of the valid teams above (infer best match)",
+      "role": "One of the valid deal roles above",
+      "priority": "P0, P1, or P2",
+      "relationshipStrength": "One of the valid values above",
+      "keyPriorities": ["priority1", "priority2"],
+      "notes": "Key observations about this person from the transcript",
+      "email": "email@example.com (if mentioned, otherwise omit)"
+    }
+  ],
+  "actionItems": [
+    {
+      "description": "What needs to be done",
+      "owner": "Person responsible",
+      "deadline": "When it's due (if mentioned)"
+    }
+  ],
+  "sentimentSignals": [
+    {
+      "stakeholderName": "Person's name",
+      "sentiment": "positive | negative | neutral",
+      "signal": "The specific phrase, behavior, or context that indicates this sentiment"
+    }
+  ],
+  "proposedActivity": {
+    "date": "${today}",
+    "type": "${sourceType}",
+    "summary": "A concise 1-2 sentence summary of this interaction, including key topics discussed and any decisions made",
+    "stakeholderNames": ["Name1", "Name2"]
+  }
+}
+
+RULES:
+- Only include people who are clearly stakeholders in the deal (not your own team members)
+- For existing stakeholders, use their exact name as shown in the existing list
+- For the team field, always choose from the valid teams list. Pick the closest match.
+- Include ALL action items mentioned, even informal ones
+- Sentiment signals should be specific and tied to observable behavior or quotes
+- The activity summary should be suitable for a timeline entry
+
+Respond with ONLY the JSON, no markdown code blocks.`,
+      },
+    ],
+  });
+
+  const textBlock = message.content.find((block) => block.type === "text");
+  return textBlock?.text || "{}";
 }

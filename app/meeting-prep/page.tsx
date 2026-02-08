@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Stakeholder } from "@/lib/types";
+import { useWorkspace } from "@/lib/workspace-context";
 import {
   Calendar,
   Loader2,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 
 export default function MeetingPrepPage() {
+  const { activeWorkspace } = useWorkspace();
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [context, setContext] = useState("");
@@ -21,10 +23,11 @@ export default function MeetingPrepPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/stakeholders")
+    if (!activeWorkspace) return;
+    fetch(`/api/stakeholders?workspace=${activeWorkspace?.id || "ai-labs"}`)
       .then((r) => r.json())
       .then(setStakeholders);
-  }, []);
+  }, [activeWorkspace?.id]);
 
   const toggle = (id: string) => {
     setSelectedIds((prev) =>
@@ -41,7 +44,7 @@ export default function MeetingPrepPage() {
     setError(null);
     setBrief(null);
     try {
-      const res = await fetch("/api/meeting-prep", {
+      const res = await fetch(`/api/meeting-prep?workspace=${activeWorkspace?.id || "ai-labs"}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ stakeholderIds: selectedIds, context }),

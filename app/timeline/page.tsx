@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Activity, Stakeholder, ACTIVITY_TYPES, ActivityType } from "@/lib/types";
+import { useWorkspace } from "@/lib/workspace-context";
 import { formatDate } from "@/lib/utils";
 import {
   Clock,
@@ -30,6 +31,7 @@ const typeColors = {
 };
 
 export default function TimelinePage() {
+  const { activeWorkspace } = useWorkspace();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,21 +48,22 @@ export default function TimelinePage() {
   const [formSummary, setFormSummary] = useState("");
 
   useEffect(() => {
+    if (!activeWorkspace) return;
     Promise.all([
-      fetch("/api/activities").then((r) => r.json()),
-      fetch("/api/stakeholders").then((r) => r.json()),
+      fetch(`/api/activities?workspace=${activeWorkspace?.id || "ai-labs"}`).then((r) => r.json()),
+      fetch(`/api/stakeholders?workspace=${activeWorkspace?.id || "ai-labs"}`).then((r) => r.json()),
     ]).then(([a, s]) => {
       setActivities(a);
       setStakeholders(s);
       setLoading(false);
     });
-  }, []);
+  }, [activeWorkspace?.id]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formStakeholders.length === 0 || !formSummary.trim()) return;
 
-    const res = await fetch("/api/activities", {
+    const res = await fetch(`/api/activities?workspace=${activeWorkspace?.id || "ai-labs"}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

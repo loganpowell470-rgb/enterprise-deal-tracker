@@ -1,6 +1,6 @@
 "use client";
 
-import { Stakeholder, TEAMS } from "@/lib/types";
+import { Stakeholder } from "@/lib/types";
 import { daysSince } from "@/lib/utils";
 
 interface Props {
@@ -17,6 +17,8 @@ const roleOrder = [
 ];
 
 export default function CoverageMap({ stakeholders }: Props) {
+  const teams = [...new Set(stakeholders.map(s => s.team))].sort();
+
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-6">
       <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
@@ -45,7 +47,7 @@ export default function CoverageMap({ stakeholders }: Props) {
             </tr>
           </thead>
           <tbody>
-            {TEAMS.map((team) => {
+            {teams.map((team) => {
               const members = stakeholders.filter((s) => s.team === team);
               const engaged = members.filter((s) => {
                 const d = daysSince(s.lastContactDate);

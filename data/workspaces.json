@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ai-labs",
+    "name": "AI Labs Inc.",
+    "description": "Enterprise AI Platform Account",
+    "dealContext": "Renewal and expansion deal. Currently at ~$400K ARR, targeting $1M ARR expansion. Renewal window in ~60 days.",
+    "dealSummary": "$400K \u2192 $1M ARR expansion",
+    "renewalInfo": "Renewal in ~60 days",
+    "teams": [
+      "Engineering Infrastructure",
+      "Finance",
+      "Legal/Compliance",
+      "Product Team A",
+      "Product Team B",
+      "Security",
+      "Procurement"
+    ],
+    "color": "indigo"
+  },
+  {
+    "id": "streaming-co",
+    "name": "Streaming Company Inc.",
+    "description": "Global Streaming Platform Account",
+    "dealContext": "New business deal for AI-powered content recommendation engine. Targeting $2M ARR initial contract with strong executive sponsorship. Decision expected in ~90 days. Proof of concept completed successfully with 23% improvement in content engagement metrics.",
+    "dealSummary": "New $2M ARR content AI deal",
+    "renewalInfo": "Decision in ~90 days",
+    "teams": [
+      "Content Engineering",
+      "Data Science",
+      "Product",
+      "Finance",
+      "Legal",
+      "Infrastructure",
+      "Executive"
+    ],
+    "color": "rose"
+  }
+]

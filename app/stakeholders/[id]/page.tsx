@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { Stakeholder, Activity } from "@/lib/types";
+import { useWorkspace } from "@/lib/workspace-context";
 import { daysSince, formatDate } from "@/lib/utils";
 import StakeholderForm from "@/components/Stakeholders/StakeholderForm";
 import {
@@ -54,6 +55,7 @@ export default function StakeholderDetail({
 }) {
   const { id } = use(params);
   const router = useRouter();
+  const { activeWorkspace } = useWorkspace();
   const [stakeholder, setStakeholder] = useState<Stakeholder | null>(null);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [allStakeholders, setAllStakeholders] = useState<Stakeholder[]>([]);
@@ -61,20 +63,21 @@ export default function StakeholderDetail({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!activeWorkspace) return;
     Promise.all([
-      fetch(`/api/stakeholders/${id}`).then((r) => r.json()),
-      fetch("/api/activities").then((r) => r.json()),
-      fetch("/api/stakeholders").then((r) => r.json()),
+      fetch(`/api/stakeholders/${id}?workspace=${activeWorkspace?.id || "ai-labs"}`).then((r) => r.json()),
+      fetch(`/api/activities?workspace=${activeWorkspace?.id || "ai-labs"}`).then((r) => r.json()),
+      fetch(`/api/stakeholders?workspace=${activeWorkspace?.id || "ai-labs"}`).then((r) => r.json()),
     ]).then(([s, a, all]) => {
       setStakeholder(s);
       setActivities(a);
       setAllStakeholders(all);
       setLoading(false);
     });
-  }, [id]);
+  }, [id, activeWorkspace?.id]);
 
   const handleUpdate = async (data: Omit<Stakeholder, "id">) => {
-    const res = await fetch(`/api/stakeholders/${id}`, {
+    const res = await fetch(`/api/stakeholders/${id}?workspace=${activeWorkspace?.id || "ai-labs"}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -86,7 +89,7 @@ export default function StakeholderDetail({
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this stakeholder?")) return;
-    await fetch(`/api/stakeholders/${id}`, { method: "DELETE" });
+    await fetch(`/api/stakeholders/${id}?workspace=${activeWorkspace?.id || "ai-labs"}`, { method: "DELETE" });
     router.push("/stakeholders");
   };
 

@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { Stakeholder } from "@/lib/types";
+import { useWorkspace } from "@/lib/workspace-context";
 import StakeholderCard from "@/components/Stakeholders/StakeholderCard";
 import StakeholderFilters from "@/components/Stakeholders/StakeholderFilters";
 import StakeholderForm from "@/components/Stakeholders/StakeholderForm";
 import { Plus } from "lucide-react";
 
 export default function StakeholdersPage() {
+  const { activeWorkspace } = useWorkspace();
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -20,13 +22,14 @@ export default function StakeholdersPage() {
   });
 
   useEffect(() => {
-    fetch("/api/stakeholders")
+    if (!activeWorkspace) return;
+    fetch(`/api/stakeholders?workspace=${activeWorkspace?.id || "ai-labs"}`)
       .then((r) => r.json())
       .then((data) => {
         setStakeholders(data);
         setLoading(false);
       });
-  }, []);
+  }, [activeWorkspace?.id]);
 
   const filtered = stakeholders.filter((s) => {
     if (
@@ -45,7 +48,7 @@ export default function StakeholdersPage() {
   });
 
   const handleAdd = async (data: Omit<Stakeholder, "id">) => {
-    const res = await fetch("/api/stakeholders", {
+    const res = await fetch(`/api/stakeholders?workspace=${activeWorkspace?.id || "ai-labs"}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

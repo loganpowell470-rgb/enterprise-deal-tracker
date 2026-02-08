@@ -1,32 +1,76 @@
-import { Stakeholder, Activity } from "./types";
+import { Stakeholder, Activity, Workspace } from "./types";
 import fs from "fs";
 import path from "path";
 
-const STAKEHOLDERS_PATH = path.join(
-  process.cwd(),
-  "data",
-  "stakeholders.json"
-);
-const ACTIVITIES_PATH = path.join(process.cwd(), "data", "activities.json");
+const DATA_DIR = path.join(process.cwd(), "data");
 
-export function getStakeholders(): Stakeholder[] {
-  const data = fs.readFileSync(STAKEHOLDERS_PATH, "utf-8");
+// --- Workspace functions ---
+
+export function getWorkspaces(): Workspace[] {
+  const filePath = path.join(DATA_DIR, "workspaces.json");
+  const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-export function getStakeholder(id: string): Stakeholder | undefined {
-  const stakeholders = getStakeholders();
+export function getWorkspace(workspaceId: string): Workspace | undefined {
+  return getWorkspaces().find((w) => w.id === workspaceId);
+}
+
+export function saveWorkspaces(workspaces: Workspace[]): void {
+  const filePath = path.join(DATA_DIR, "workspaces.json");
+  fs.writeFileSync(filePath, JSON.stringify(workspaces, null, 2));
+}
+
+export function addWorkspace(workspace: Workspace): Workspace {
+  const workspaces = getWorkspaces();
+  if (workspaces.find((w) => w.id === workspace.id)) {
+    throw new Error(`Workspace "${workspace.id}" already exists`);
+  }
+  workspaces.push(workspace);
+  saveWorkspaces(workspaces);
+  // Create workspace data directory with empty files
+  const safe = workspace.id.replace(/[^a-z0-9-]/g, "");
+  const dirPath = path.join(DATA_DIR, safe);
+  fs.mkdirSync(dirPath, { recursive: true });
+  fs.writeFileSync(path.join(dirPath, "stakeholders.json"), "[]");
+  fs.writeFileSync(path.join(dirPath, "activities.json"), "[]");
+  return workspace;
+}
+
+function getWorkspacePath(workspaceId: string, file: string): string {
+  const safe = workspaceId.replace(/[^a-z0-9-]/g, "");
+  return path.join(DATA_DIR, safe, file);
+}
+
+// --- Stakeholder functions ---
+
+export function getStakeholders(workspaceId: string): Stakeholder[] {
+  const filePath = getWorkspacePath(workspaceId, "stakeholders.json");
+  const data = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(data);
+}
+
+export function getStakeholder(
+  workspaceId: string,
+  id: string
+): Stakeholder | undefined {
+  const stakeholders = getStakeholders(workspaceId);
   return stakeholders.find((s) => s.id === id);
 }
 
-export function saveStakeholders(stakeholders: Stakeholder[]): void {
-  fs.writeFileSync(STAKEHOLDERS_PATH, JSON.stringify(stakeholders, null, 2));
+export function saveStakeholders(
+  workspaceId: string,
+  stakeholders: Stakeholder[]
+): void {
+  const filePath = getWorkspacePath(workspaceId, "stakeholders.json");
+  fs.writeFileSync(filePath, JSON.stringify(stakeholders, null, 2));
 }
 
 export function addStakeholder(
+  workspaceId: string,
   stakeholder: Omit<Stakeholder, "id">
 ): Stakeholder {
-  const stakeholders = getStakeholders();
+  const stakeholders = getStakeholders(workspaceId);
   const maxId = stakeholders.reduce((max, s) => {
     const num = parseInt(s.id.replace("s", ""), 10);
     return num > max ? num : max;
@@ -36,50 +80,60 @@ export function addStakeholder(
     id: `s${maxId + 1}`,
   };
   stakeholders.push(newStakeholder);
-  saveStakeholders(stakeholders);
+  saveStakeholders(workspaceId, stakeholders);
   return newStakeholder;
 }
 
 export function updateStakeholder(
+  workspaceId: string,
   id: string,
   updates: Partial<Stakeholder>
 ): Stakeholder | null {
-  const stakeholders = getStakeholders();
+  const stakeholders = getStakeholders(workspaceId);
   const index = stakeholders.findIndex((s) => s.id === id);
   if (index === -1) return null;
   stakeholders[index] = { ...stakeholders[index], ...updates, id };
-  saveStakeholders(stakeholders);
+  saveStakeholders(workspaceId, stakeholders);
   return stakeholders[index];
 }
 
-export function deleteStakeholder(id: string): boolean {
-  const stakeholders = getStakeholders();
+export function deleteStakeholder(workspaceId: string, id: string): boolean {
+  const stakeholders = getStakeholders(workspaceId);
   const filtered = stakeholders.filter((s) => s.id !== id);
   if (filtered.length === stakeholders.length) return false;
-  saveStakeholders(filtered);
-  // Also remove from activities
-  const activities = getActivities();
+  saveStakeholders(workspaceId, filtered);
+  const activities = getActivities(workspaceId);
   const updatedActivities = activities
     .map((a) => ({
       ...a,
       stakeholderIds: a.stakeholderIds.filter((sid) => sid !== id),
     }))
     .filter((a) => a.stakeholderIds.length > 0);
-  saveActivities(updatedActivities);
+  saveActivities(workspaceId, updatedActivities);
   return true;
 }
 
-export function getActivities(): Activity[] {
-  const data = fs.readFileSync(ACTIVITIES_PATH, "utf-8");
+// --- Activity functions ---
+
+export function getActivities(workspaceId: string): Activity[] {
+  const filePath = getWorkspacePath(workspaceId, "activities.json");
+  const data = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(data);
 }
 
-export function saveActivities(activities: Activity[]): void {
-  fs.writeFileSync(ACTIVITIES_PATH, JSON.stringify(activities, null, 2));
+export function saveActivities(
+  workspaceId: string,
+  activities: Activity[]
+): void {
+  const filePath = getWorkspacePath(workspaceId, "activities.json");
+  fs.writeFileSync(filePath, JSON.stringify(activities, null, 2));
 }
 
-export function addActivity(activity: Omit<Activity, "id">): Activity {
-  const activities = getActivities();
+export function addActivity(
+  workspaceId: string,
+  activity: Omit<Activity, "id">
+): Activity {
+  const activities = getActivities(workspaceId);
   const maxId = activities.reduce((max, a) => {
     const num = parseInt(a.id.replace("a", ""), 10);
     return num > max ? num : max;
@@ -89,9 +143,11 @@ export function addActivity(activity: Omit<Activity, "id">): Activity {
     id: `a${maxId + 1}`,
   };
   activities.push(newActivity);
-  saveActivities(activities);
+  saveActivities(workspaceId, activities);
   return newActivity;
 }
+
+// --- Utility functions ---
 
 export function daysSince(dateStr: string | null): number | null {
   if (!dateStr) return null;
@@ -105,10 +161,9 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
   score: number;
   factors: { label: string; impact: number; detail: string }[];
 } {
-  let score = 50; // Base score
+  let score = 50;
   const factors: { label: string; impact: number; detail: string }[] = [];
 
-  // Champion presence (+15 max)
   const champions = stakeholders.filter((s) => s.role === "Champion");
   const strongChampions = champions.filter(
     (s) => s.relationshipStrength === "Strong"
@@ -129,7 +184,6 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
     });
   }
 
-  // Economic buyer engagement (+15 max)
   const econBuyers = stakeholders.filter((s) => s.role === "Economic Buyer");
   const engagedBuyers = econBuyers.filter((s) => {
     const days = daysSince(s.lastContactDate);
@@ -152,7 +206,6 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
     });
   }
 
-  // Blocker management (-20 max penalty)
   const blockers = stakeholders.filter((s) => s.role === "Blocker");
   const unengagedBlockers = blockers.filter((s) => {
     const days = daysSince(s.lastContactDate);
@@ -173,7 +226,6 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
     });
   }
 
-  // Team coverage (+10 max)
   const teams = new Set(stakeholders.map((s) => s.team));
   const engagedTeams = new Set(
     stakeholders
@@ -192,7 +244,6 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
     detail: `${engagedTeams.size} of ${teams.size} teams recently engaged`,
   });
 
-  // Relationship health (+10 max)
   const strongRelationships = stakeholders.filter(
     (s) => s.relationshipStrength === "Strong"
   ).length;
@@ -213,7 +264,6 @@ export function computeDealHealthScore(stakeholders: Stakeholder[]): {
     detail: `${strongRelationships} strong, ${atRisk} weak/at-risk`,
   });
 
-  // Recency of contact (+10 max)
   const recentContacts = stakeholders.filter((s) => {
     const days = daysSince(s.lastContactDate);
     return days !== null && days < 14;

@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStakeholders, getActivities } from "@/lib/data";
+import { getStakeholders, getActivities, getWorkspace } from "@/lib/data";
 import { generateMeetingPrep } from "@/lib/claude";
+
+function getWorkspaceId(request: NextRequest): string {
+  return request.nextUrl.searchParams.get("workspace") || "ai-labs";
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const workspaceId = getWorkspaceId(request);
     const { stakeholderIds, context } = await request.json();
 
     if (!stakeholderIds || !Array.isArray(stakeholderIds) || stakeholderIds.length === 0) {
@@ -13,13 +18,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const stakeholders = getStakeholders();
-    const activities = getActivities();
+    const stakeholders = getStakeholders(workspaceId);
+    const activities = getActivities(workspaceId);
+    const workspace = getWorkspace(workspaceId);
     const brief = await generateMeetingPrep(
       stakeholders,
       stakeholderIds,
       activities,
-      context
+      context,
+      workspace
     );
 
     return NextResponse.json({ brief });

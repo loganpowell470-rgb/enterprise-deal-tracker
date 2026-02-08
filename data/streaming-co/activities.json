@@ -1,0 +1,107 @@
+[
+  {
+    "id": "a1",
+    "date": "2026-01-10",
+    "stakeholderIds": ["s1", "s2"],
+    "type": "Meeting",
+    "summary": "Initial discovery call with CTO Marcus Johnson and VP Content Engineering Priya Patel. Discussed content recommendation challenges and AI platform capabilities. Strong interest in POC."
+  },
+  {
+    "id": "a2",
+    "date": "2026-01-15",
+    "stakeholderIds": ["s2", "s3", "s6"],
+    "type": "Meeting",
+    "summary": "Technical deep-dive with content engineering and data science teams. Reviewed ML architecture, API specifications, and integration approach. Team impressed with latency benchmarks."
+  },
+  {
+    "id": "a3",
+    "date": "2026-01-20",
+    "stakeholderIds": ["s4", "s10"],
+    "type": "Meeting",
+    "summary": "Financial review with CFO Sandra Williams and Finance Director Brian Foster. Presented ROI model projecting $15M incremental revenue. Sandra requested 3-year TCO breakdown."
+  },
+  {
+    "id": "a4",
+    "date": "2026-01-22",
+    "stakeholderIds": ["s8"],
+    "type": "Email",
+    "summary": "Sent comprehensive data privacy documentation and AI liability framework to General Counsel Elena Rodriguez. Included SOC2 Type II report and data processing addendum draft."
+  },
+  {
+    "id": "a5",
+    "date": "2026-01-25",
+    "stakeholderIds": ["s7", "s12"],
+    "type": "Meeting",
+    "summary": "Infrastructure and security review with Michael Chang and Carlos Ruiz. Walked through deployment architecture, multi-region setup, and encryption standards. Both approved the approach."
+  },
+  {
+    "id": "a6",
+    "date": "2026-01-28",
+    "stakeholderIds": ["s2", "s3", "s6", "s15"],
+    "type": "Meeting",
+    "summary": "POC kickoff meeting. Defined success metrics (20%+ engagement lift target), timeline (2 weeks), and technical requirements. Team allocated 3 engineers to the integration."
+  },
+  {
+    "id": "a7",
+    "date": "2026-01-30",
+    "stakeholderIds": ["s5", "s11"],
+    "type": "Meeting",
+    "summary": "Product alignment session with VP Product James Chen and PM Aisha Okafor. Reviewed product requirements, UX wireframes for recommendation surfaces. James confirmed Q2 roadmap slot."
+  },
+  {
+    "id": "a8",
+    "date": "2026-02-01",
+    "stakeholderIds": ["s13"],
+    "type": "Call",
+    "summary": "Analytics methodology review with Lisa Park. Validated A/B testing framework and engagement metrics methodology for POC measurement. Confirmed statistical significance approach."
+  },
+  {
+    "id": "a9",
+    "date": "2026-02-02",
+    "stakeholderIds": ["s12"],
+    "type": "Email",
+    "summary": "Carlos Ruiz confirmed security review completion. All penetration test results and SOC2 compliance items cleared. No outstanding security concerns."
+  },
+  {
+    "id": "a10",
+    "date": "2026-02-03",
+    "stakeholderIds": ["s4", "s14"],
+    "type": "Meeting",
+    "summary": "Executive briefing with CFO Sandra Williams and CCO Derek Washington. Presented POC results showing 23% engagement lift. Sandra gave verbal budget approval. Derek impressed with long-tail content discovery."
+  },
+  {
+    "id": "a11",
+    "date": "2026-02-03",
+    "stakeholderIds": ["s9"],
+    "type": "Call",
+    "summary": "Content acquisition strategy discussion with Tomoko Nakamura. Explored how AI recommendations can surface underperforming catalog content and strengthen licensing negotiations."
+  },
+  {
+    "id": "a12",
+    "date": "2026-02-04",
+    "stakeholderIds": ["s7", "s10"],
+    "type": "Meeting",
+    "summary": "Production rollout planning with Michael Chang and Brian Foster. Discussed deployment timeline, infrastructure costs, and payment terms. Both aligned on Q2 launch target."
+  },
+  {
+    "id": "a13",
+    "date": "2026-02-05",
+    "stakeholderIds": ["s3", "s8"],
+    "type": "Meeting",
+    "summary": "Joint technical-legal session with David Kim and Elena Rodriguez. Addressed remaining AI liability questions using POC data. Elena requesting final data processing addendum revision."
+  },
+  {
+    "id": "a14",
+    "date": "2026-02-06",
+    "stakeholderIds": ["s1", "s5", "s11"],
+    "type": "Meeting",
+    "summary": "Strategic roadmap alignment with CTO Marcus Johnson, VP Product James Chen, and PM Aisha Okafor. Discussed Phase 2 expansion into personalized content creation tools. Strong enthusiasm across the board."
+  },
+  {
+    "id": "a15",
+    "date": "2026-02-07",
+    "stakeholderIds": ["s2", "s6", "s15"],
+    "type": "Meeting",
+    "summary": "Technical readiness review with Priya Patel, Rachel Torres, and Nina Volkov. Production integration 80% complete. SDK feedback very positive. On track for Q2 launch. Nina submitted initial API client PR."
+  }
+]
