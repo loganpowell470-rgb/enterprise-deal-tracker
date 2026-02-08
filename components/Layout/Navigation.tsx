@@ -18,8 +18,10 @@ import {
   Plus,
   X,
   Loader2,
+  LogOut,
 } from "lucide-react";
 import { useWorkspace } from "@/lib/workspace-context";
+import { useAuth } from "@/lib/auth-context";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -53,6 +55,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const { workspaces, activeWorkspace, setActiveWorkspaceId, refreshWorkspaces } =
     useWorkspace();
+  const { logout } = useAuth();
   const [showSwitcher, setShowSwitcher] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showMoreDetails, setShowMoreDetails] = useState(false);
@@ -163,14 +166,23 @@ export default function Navigation() {
   return (
     <nav className="fixed left-0 top-0 h-full w-60 bg-slate-900 text-white flex flex-col z-50">
       <div className="p-5 border-b border-slate-700">
-        <div className="flex items-center gap-2">
-          <Target className="w-7 h-7 text-indigo-400" />
-          <div>
-            <h1 className="text-base font-bold leading-tight">Deal Command</h1>
-            <p className="text-[11px] text-slate-400">
-              Enterprise Multi-Threading
-            </p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Target className="w-7 h-7 text-indigo-400" />
+            <div>
+              <h1 className="text-base font-bold leading-tight">Deal Command</h1>
+              <p className="text-[11px] text-slate-400">
+                Enterprise Multi-Threading
+              </p>
+            </div>
           </div>
+          <button
+            onClick={logout}
+            title="Sign out"
+            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-800 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
