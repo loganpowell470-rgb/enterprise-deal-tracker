@@ -1,0 +1,128 @@
+[
+  {
+    "id": "a1",
+    "date": "2026-02-04",
+    "stakeholderIds": ["s9"],
+    "type": "Meeting",
+    "summary": "Product roadmap review with Rachel. She shared upcoming feature priorities for Q2. Very positive on our new batch processing capabilities. She offered to champion an internal case study."
+  },
+  {
+    "id": "a2",
+    "date": "2026-02-02",
+    "stakeholderIds": ["s1", "s3"],
+    "type": "Meeting",
+    "summary": "Technical architecture deep-dive with Alex and Jordan. Discussed scaling plan for 10x traffic growth. Alex confirmed budget allocation for next quarter. Jordan asked about migration tooling."
+  },
+  {
+    "id": "a3",
+    "date": "2026-01-30",
+    "stakeholderIds": ["s3"],
+    "type": "Call",
+    "summary": "Quick sync with Jordan on integration timeline. His team can start the POC next sprint. Needs sandbox environment access for 5 engineers."
+  },
+  {
+    "id": "a4",
+    "date": "2026-01-26",
+    "stakeholderIds": ["s10"],
+    "type": "Email",
+    "summary": "Chris sent over his internal demo recording and feedback doc. 15 feature requests compiled from his team. Highlighted analytics dashboard as top priority."
+  },
+  {
+    "id": "a5",
+    "date": "2026-01-20",
+    "stakeholderIds": ["s12"],
+    "type": "Meeting",
+    "summary": "Pricing discussion with Kevin. He's comparing our per-query pricing vs competitor's flat rate model. Needs a custom proposal showing volume discount tiers for his projected usage."
+  },
+  {
+    "id": "a6",
+    "date": "2026-01-16",
+    "stakeholderIds": ["s2"],
+    "type": "Meeting",
+    "summary": "Technical evaluation review with Maya. She completed her benchmark tests. Our API latency is 40% better than competition. Raised concerns about SDK documentation for edge cases."
+  },
+  {
+    "id": "a7",
+    "date": "2026-01-13",
+    "stakeholderIds": ["s11"],
+    "type": "Email",
+    "summary": "Taylor submitted feature request for custom report templates. Also flagged data export formatting issues with CSV files. Forwarded to product team."
+  },
+  {
+    "id": "a8",
+    "date": "2026-01-07",
+    "stakeholderIds": ["s5"],
+    "type": "Call",
+    "summary": "Pricing breakdown call with Marcus. He wants to model three scenarios: current usage, projected growth, and peak capacity. Sending him our pricing calculator spreadsheet."
+  },
+  {
+    "id": "a9",
+    "date": "2025-12-31",
+    "stakeholderIds": ["s8"],
+    "type": "Email",
+    "summary": "Sent SOC2 Type II report and data processing addendum to Emma. She acknowledged receipt but hasn't provided feedback yet. Follow up needed."
+  },
+  {
+    "id": "a10",
+    "date": "2025-12-25",
+    "stakeholderIds": ["s13"],
+    "type": "Slack",
+    "summary": "Nina reported issues with error codes during her POC. Specifically, 429 rate limit errors not returning proper retry-after headers. Escalated to engineering."
+  },
+  {
+    "id": "a11",
+    "date": "2025-12-23",
+    "stakeholderIds": ["s4", "s1"],
+    "type": "Meeting",
+    "summary": "QBR meeting with Sarah and Alex. Brief interaction with CFO - she asked pointed questions about cost predictability and competitor pricing. Alex presented usage growth metrics. Sarah seemed cautious but not opposed."
+  },
+  {
+    "id": "a12",
+    "date": "2025-12-17",
+    "stakeholderIds": ["s7"],
+    "type": "Meeting",
+    "summary": "Initial legal review with David. He raised concerns about data handling, cross-border transfers, and liability clauses. Wants custom DPA terms. His tone was adversarial - need to bring our legal counsel next time."
+  },
+  {
+    "id": "a13",
+    "date": "2025-12-14",
+    "stakeholderIds": ["s18"],
+    "type": "Meeting",
+    "summary": "Intro meeting with James. Very process-oriented. Walked through their vendor evaluation framework. 12-step process. Emphasized need for security team sign-off before procurement can proceed."
+  },
+  {
+    "id": "a14",
+    "date": "2025-12-09",
+    "stakeholderIds": ["s6"],
+    "type": "Email",
+    "summary": "Brief email intro with Lisa about billing workflows. She asked if we support PO-based billing and NET60 terms. Need to confirm with our finance team."
+  },
+  {
+    "id": "a15",
+    "date": "2025-12-05",
+    "stakeholderIds": ["s19"],
+    "type": "Email",
+    "summary": "Email exchange with Amanda about their procurement timeline. She mentioned Q1 is typically when they finalize vendor renewals. Sent her our standard vendor questionnaire responses."
+  },
+  {
+    "id": "a16",
+    "date": "2025-11-29",
+    "stakeholderIds": ["s14"],
+    "type": "Meeting",
+    "summary": "Brief chat with Sam at team lunch. He's interested in our design system integration but didn't go deep. More of a social introduction."
+  },
+  {
+    "id": "a17",
+    "date": "2026-02-05",
+    "stakeholderIds": ["s1"],
+    "type": "Slack",
+    "summary": "Quick Slack message from Alex sharing internal feedback survey results. 87% satisfaction rate among current users. He's using this data to build the business case for expansion."
+  },
+  {
+    "id": "a18",
+    "date": "2026-01-28",
+    "stakeholderIds": ["s9", "s10"],
+    "type": "Meeting",
+    "summary": "Product feedback session with Rachel and Chris. Discussed upcoming API v2 features. They're excited about streaming support and function calling. Rachel wants to be a design partner for the beta."
+  }
+]
