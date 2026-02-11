@@ -29,6 +29,7 @@ export interface Stakeholder {
   keyPriorities: string[];
   notes: string;
   email?: string;
+  reportsTo?: string | null;
 }
 
 export interface Activity {

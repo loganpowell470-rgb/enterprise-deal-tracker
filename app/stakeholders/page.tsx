@@ -6,13 +6,15 @@ import { useWorkspace } from "@/lib/workspace-context";
 import StakeholderCard from "@/components/Stakeholders/StakeholderCard";
 import StakeholderFilters from "@/components/Stakeholders/StakeholderFilters";
 import StakeholderForm from "@/components/Stakeholders/StakeholderForm";
-import { Plus } from "lucide-react";
+import OrgChart from "@/components/Stakeholders/OrgChart";
+import { Plus, LayoutGrid, GitBranchPlus } from "lucide-react";
 
 export default function StakeholdersPage() {
   const { activeWorkspace } = useWorkspace();
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [viewMode, setViewMode] = useState<"orgchart" | "grid">("orgchart");
   const [filters, setFilters] = useState({
     search: "",
     team: "",
@@ -32,12 +34,15 @@ export default function StakeholdersPage() {
   }, [activeWorkspace?.id]);
 
   const filtered = stakeholders.filter((s) => {
-    if (
-      filters.search &&
-      !s.name.toLowerCase().includes(filters.search.toLowerCase()) &&
-      !s.title.toLowerCase().includes(filters.search.toLowerCase())
-    ) {
-      return false;
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      const matchesName = s.name.toLowerCase().includes(q);
+      const matchesTitle = s.title.toLowerCase().includes(q);
+      const matchesTeam = s.team.toLowerCase().includes(q);
+      const matchesRole = s.role.toLowerCase().includes(q);
+      if (!matchesName && !matchesTitle && !matchesTeam && !matchesRole) {
+        return false;
+      }
     }
     if (filters.team && s.team !== filters.team) return false;
     if (filters.role && s.role !== filters.role) return false;
@@ -89,33 +94,71 @@ export default function StakeholdersPage() {
             {new Set(stakeholders.map((s) => s.team)).size} teams
           </p>
         </div>
-        <button
-          onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors btn-press"
-        >
-          <Plus className="w-4 h-4" />
-          Add Stakeholder
-        </button>
+        <div className="flex items-center gap-3">
+          {/* View toggle */}
+          <div className="flex items-center bg-slate-100 rounded-lg p-0.5">
+            <button
+              onClick={() => setViewMode("orgchart")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                viewMode === "orgchart"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
+              }`}
+            >
+              <GitBranchPlus className="w-3.5 h-3.5" />
+              Org Chart
+            </button>
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                viewMode === "grid"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              Grid
+            </button>
+          </div>
+
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors btn-press"
+          >
+            <Plus className="w-4 h-4" />
+            Add Stakeholder
+          </button>
+        </div>
       </div>
 
       <div className="space-y-4">
         <div className="animate-fade-up stagger-1">
-          <StakeholderFilters filters={filters} onChange={setFilters} />
+          <StakeholderFilters
+            filters={filters}
+            onChange={setFilters}
+            teams={[...new Set(stakeholders.map((s) => s.team))].sort()}
+          />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filtered.map((s, i) => (
-            <StakeholderCard key={s.id} stakeholder={s} index={i} />
-          ))}
-        </div>
+        {viewMode === "orgchart" ? (
+          <OrgChart stakeholders={filtered} />
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {filtered.map((s, i) => (
+                <StakeholderCard key={s.id} stakeholder={s} index={i} />
+              ))}
+            </div>
 
-        {filtered.length === 0 && (
-          <div className="text-center py-12 text-slate-500 animate-fade-up">
-            <p className="text-lg font-medium">No stakeholders found</p>
-            <p className="text-sm mt-1">
-              Try adjusting your filters or add a new stakeholder
-            </p>
-          </div>
+            {filtered.length === 0 && (
+              <div className="text-center py-12 text-slate-500 animate-fade-up">
+                <p className="text-lg font-medium">No stakeholders found</p>
+                <p className="text-sm mt-1">
+                  Try adjusting your filters or add a new stakeholder
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
 

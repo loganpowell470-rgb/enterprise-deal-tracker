@@ -15,7 +15,8 @@
       "Platform expansion to Product Team B",
       "Deployment efficiency"
     ],
-    "notes": "Primary champion. Very enthusiastic about our platform capabilities. Has internal budget authority for engineering tools. Key ally for driving adoption across engineering org. Presented our ROI analysis to his leadership team last month.\n\n[Smart Import 2026-02-05] Expressed strong enthusiasm for platform expansion. Team using product daily with 40% reduction in deployment time. Volunteered to be internal champion for expansion. Willing to facilitate introductions to Product Team B."
+    "notes": "Primary champion. Very enthusiastic about our platform capabilities. Has internal budget authority for engineering tools. Key ally for driving adoption across engineering org. Presented our ROI analysis to his leadership team last month.\n\n[Smart Import 2026-02-05] Expressed strong enthusiasm for platform expansion. Team using product daily with 40% reduction in deployment time. Volunteered to be internal champion for expansion. Willing to facilitate introductions to Product Team B.",
+    "reportsTo": null
   },
   {
     "id": "s2",
@@ -31,7 +32,8 @@
       "Developer experience",
       "SDK quality"
     ],
-    "notes": "Technically rigorous. Ran benchmarks comparing our API vs competitors. Impressed with latency numbers but had concerns about SDK documentation gaps. Need to follow up on her technical evaluation doc."
+    "notes": "Technically rigorous. Ran benchmarks comparing our API vs competitors. Impressed with latency numbers but had concerns about SDK documentation gaps. Need to follow up on her technical evaluation doc.",
+    "reportsTo": "s1"
   },
   {
     "id": "s3",
@@ -47,7 +49,8 @@
       "Integration complexity",
       "Onboarding speed"
     ],
-    "notes": "Manages the team that would implement our solution. Very practical mindset. Cares about how quickly his team can get productive. Had a great call about our onboarding playbook."
+    "notes": "Manages the team that would implement our solution. Very practical mindset. Cares about how quickly his team can get productive. Had a great call about our onboarding playbook.",
+    "reportsTo": "s1"
   },
   {
     "id": "s4",
@@ -66,7 +69,8 @@
       "ROI documentation",
       "Cost per seat analysis"
     ],
-    "notes": "Critical decision maker. Met briefly at QBR but haven't had dedicated time. She's focused on vendor consolidation this quarter. Need to build a stronger business case with clear ROI metrics. Alex mentioned she's skeptical of AI spend without clear payback timeline.\n\n[Smart Import 2026-02-05] Raised concerns about renewal pricing due to tightened Q2 budget. Requesting cost breakdown per seat and ROI documentation before approving expansion. Tone was cautious but not adversarial, indicating openness pending documentation."
+    "notes": "Critical decision maker. Met briefly at QBR but haven't had dedicated time. She's focused on vendor consolidation this quarter. Need to build a stronger business case with clear ROI metrics. Alex mentioned she's skeptical of AI spend without clear payback timeline.\n\n[Smart Import 2026-02-05] Raised concerns about renewal pricing due to tightened Q2 budget. Requesting cost breakdown per seat and ROI documentation before approving expansion. Tone was cautious but not adversarial, indicating openness pending documentation.",
+    "reportsTo": null
   },
   {
     "id": "s5",
@@ -82,7 +86,8 @@
       "Vendor consolidation",
       "Cost predictability"
     ],
-    "notes": "Reports to Sarah. More approachable than the CFO. Could be an internal advocate if we give him the right materials. Asked for detailed pricing breakdowns by use case."
+    "notes": "Reports to Sarah. More approachable than the CFO. Could be an internal advocate if we give him the right materials. Asked for detailed pricing breakdowns by use case.",
+    "reportsTo": "s4"
   },
   {
     "id": "s6",
@@ -98,7 +103,8 @@
       "Invoice automation",
       "PO management"
     ],
-    "notes": "Handles the actual payment processing. Brief intro only. Low priority but could block if billing process doesn't fit their workflows."
+    "notes": "Handles the actual payment processing. Brief intro only. Low priority but could block if billing process doesn't fit their workflows.",
+    "reportsTo": "s4"
   },
   {
     "id": "s7",
@@ -116,7 +122,8 @@
       "Liability clauses",
       "Compliance concerns"
     ],
-    "notes": "Raised significant concerns about data handling practices in our initial review. Wants custom DPA terms that our legal team is still reviewing. Has blocked two other vendor renewals this quarter. URGENT: Need to schedule follow-up with our legal team present.\n\n[Smart Import 2026-02-05] Not present in meeting but mentioned by Michelle Lee as having compliance concerns. Needs to be included in upcoming security review."
+    "notes": "Raised significant concerns about data handling practices in our initial review. Wants custom DPA terms that our legal team is still reviewing. Has blocked two other vendor renewals this quarter. URGENT: Need to schedule follow-up with our legal team present.\n\n[Smart Import 2026-02-05] Not present in meeting but mentioned by Michelle Lee as having compliance concerns. Needs to be included in upcoming security review.",
+    "reportsTo": null
   },
   {
     "id": "s8",
@@ -132,7 +139,8 @@
       "SOC2 compliance",
       "Data residency"
     ],
-    "notes": "Works closely with David. More collaborative than her boss but still cautious. Requested our SOC2 Type II report and data processing addendum. Hasn't confirmed receipt of the documents we sent."
+    "notes": "Works closely with David. More collaborative than her boss but still cautious. Requested our SOC2 Type II report and data processing addendum. Hasn't confirmed receipt of the documents we sent.",
+    "reportsTo": "s7"
   },
   {
     "id": "s9",
@@ -148,7 +156,8 @@
       "User experience",
       "A/B testing capabilities"
     ],
-    "notes": "Strong internal champion. Her team is the most active user of our platform. Regularly provides product feedback. Invited us to present at their all-hands. Great relationship - she's actively selling internally."
+    "notes": "Strong internal champion. Her team is the most active user of our platform. Regularly provides product feedback. Invited us to present at their all-hands. Great relationship - she's actively selling internally.",
+    "reportsTo": null
   },
   {
     "id": "s10",
@@ -164,7 +173,8 @@
       "Analytics",
       "Third-party integrations"
     ],
-    "notes": "Power user. Built several internal tools on top of our API. Gave a great internal demo that generated interest from Product Team B. Wants better analytics dashboard and Datadog integration."
+    "notes": "Power user. Built several internal tools on top of our API. Gave a great internal demo that generated interest from Product Team B. Wants better analytics dashboard and Datadog integration.",
+    "reportsTo": "s9"
   },
   {
     "id": "s11",
@@ -180,7 +190,8 @@
       "Reporting",
       "Export capabilities"
     ],
-    "notes": "Uses our analytics features daily. Had some complaints about data export formatting. Submitted a feature request for custom report templates."
+    "notes": "Uses our analytics features daily. Had some complaints about data export formatting. Submitted a feature request for custom report templates.",
+    "reportsTo": "s9"
   },
   {
     "id": "s12",
@@ -196,7 +207,8 @@
       "Response latency",
       "Throughput"
     ],
-    "notes": "Evaluating whether to adopt our platform for his team. Cost-conscious. Running a parallel evaluation with a competitor. Need to get him a custom pricing proposal that shows volume discounts."
+    "notes": "Evaluating whether to adopt our platform for his team. Cost-conscious. Running a parallel evaluation with a competitor. Need to get him a custom pricing proposal that shows volume discounts.",
+    "reportsTo": null
   },
   {
     "id": "s13",
@@ -212,7 +224,8 @@
       "Error handling",
       "Developer onboarding"
     ],
-    "notes": "Had issues with our error codes during a POC. Frustrated with documentation gaps. Need to check if the docs update we shipped addressed her concerns."
+    "notes": "Had issues with our error codes during a POC. Frustrated with documentation gaps. Need to check if the docs update we shipped addressed her concerns.",
+    "reportsTo": "s12"
   },
   {
     "id": "s14",
@@ -228,7 +241,8 @@
       "UI component library",
       "Prototyping"
     ],
-    "notes": "Brief intro at a team lunch. Interested in our design system integration capabilities but haven't had a dedicated conversation."
+    "notes": "Brief intro at a team lunch. Interested in our design system integration capabilities but haven't had a dedicated conversation.",
+    "reportsTo": "s12"
   },
   {
     "id": "s15",
@@ -248,7 +262,8 @@
       "SOC2 certification",
       "Data residency and encryption standards"
     ],
-    "notes": "CRITICAL GAP: Have not made contact yet. Alex mentioned she has veto power over all new vendors. Need to get an intro through Alex or Rachel. Known to be thorough in security reviews - typically takes 4-6 weeks.\n\n[Smart Import 2026-02-05] First-time participant in meeting. Skeptical about security compliance. Asked pointed questions about SOC2, data residency, and encryption. Mentioned Legal team (David Park) also has compliance concerns. Requires security review completion before any expansion can proceed."
+    "notes": "CRITICAL GAP: Have not made contact yet. Alex mentioned she has veto power over all new vendors. Need to get an intro through Alex or Rachel. Known to be thorough in security reviews - typically takes 4-6 weeks.\n\n[Smart Import 2026-02-05] First-time participant in meeting. Skeptical about security compliance. Asked pointed questions about SOC2, data residency, and encryption. Mentioned Legal team (David Park) also has compliance concerns. Requires security review completion before any expansion can proceed.",
+    "reportsTo": null
   },
   {
     "id": "s16",
@@ -264,7 +279,8 @@
       "Security audits",
       "Penetration testing results"
     ],
-    "notes": "No contact yet. Reports to Michelle. Would be the one running the security technical evaluation. Need to prepare our security whitepaper and pen test results before engaging."
+    "notes": "No contact yet. Reports to Michelle. Would be the one running the security technical evaluation. Need to prepare our security whitepaper and pen test results before engaging.",
+    "reportsTo": "s15"
   },
   {
     "id": "s17",
@@ -280,7 +296,8 @@
       "Monitoring",
       "Compliance monitoring"
     ],
-    "notes": "No contact yet. Part of the security team that will evaluate our platform. Lower priority but could be a good entry point to the security team."
+    "notes": "No contact yet. Part of the security team that will evaluate our platform. Lower priority but could be a good entry point to the security team.",
+    "reportsTo": "s15"
   },
   {
     "id": "s18",
@@ -297,7 +314,8 @@
       "SLAs",
       "Payment terms"
     ],
-    "notes": "Met once early in the process. Very process-driven. Won't move forward without security sign-off. Need to re-engage as we get closer to contract phase. Alex warned he negotiates hard on payment terms."
+    "notes": "Met once early in the process. Very process-driven. Won't move forward without security sign-off. Need to re-engage as we get closer to contract phase. Alex warned he negotiates hard on payment terms.",
+    "reportsTo": null
   },
   {
     "id": "s19",
@@ -313,7 +331,8 @@
       "Approval workflows",
       "Vendor scoring"
     ],
-    "notes": "Brief email exchange. She handles the day-to-day procurement process. Could help us navigate their internal approval workflow. Need to reconnect and understand their procurement timeline."
+    "notes": "Brief email exchange. She handles the day-to-day procurement process. Could help us navigate their internal approval workflow. Need to reconnect and understand their procurement timeline.",
+    "reportsTo": "s18"
   },
   {
     "id": "s20",
@@ -329,9 +348,11 @@
       "Renewals",
       "Vendor portal"
     ],
-    "notes": "No contact yet. Would be our day-to-day contact post-sale for procurement matters. Lower priority until we're closer to closing."
+    "notes": "No contact yet. Would be our day-to-day contact post-sale for procurement matters. Lower priority until we're closer to closing.",
+    "reportsTo": "s18"
   },
   {
+    "id": "s21",
     "name": "Tom Bradley",
     "title": "Head of Data Platform",
     "team": "Engineering Infrastructure",
@@ -345,6 +366,6 @@
       "Enterprise SLA guarantees"
     ],
     "notes": "New to AI Labs Inc., joined last month. Reports to Engineering. Excited about integrating API into data pipeline. Technical focus on rate limits and SLA guarantees suggests hands-on evaluation role.",
-    "id": "s21"
+    "reportsTo": "s1"
   }
 ]

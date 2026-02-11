@@ -19,6 +19,10 @@ import {
   Database,
   ArrowUpDown,
   Building2,
+  Mic,
+  FileText,
+  Brain,
+  TrendingUp,
 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -162,7 +166,7 @@ export default function IntegrationsPage() {
   }
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <Plug className="w-6 h-6 text-indigo-600" />
@@ -277,7 +281,7 @@ export default function IntegrationsPage() {
       </div>
 
       {/* Integration Cards */}
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
         {/* Gmail Integration */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <div className="flex items-center justify-between mb-4">
@@ -441,6 +445,51 @@ export default function IntegrationsPage() {
               icon={<Database className="w-4 h-4" />}
               title="Auto-update contact dates"
               description="Keep last contact dates in sync across platforms"
+            />
+          </div>
+        </div>
+
+        {/* Gong - Coming Soon */}
+        <div className="bg-white rounded-xl border border-slate-200 border-dashed p-6 relative overflow-hidden">
+          <div className="absolute top-3 right-3">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+              Coming Soon
+            </span>
+          </div>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l1.09 3.35L14.18 3.1l-.18 3.5 2.83-2.07-.95 3.38 3.41-.64-2.39 2.55 3.1 1.54-3.32.91 2.12 2.78-3.45-.48.72 3.43-2.95-1.84L12 19.5l-1.12-3.14-2.95 1.84.72-3.43-3.45.48 2.12-2.78-3.32-.91 3.1-1.54-2.39-2.55 3.41.64-.95-3.38 2.83 2.07-.18-3.5 1.09 2.25z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">Gong</h3>
+              <p className="text-xs text-slate-500">
+                Call recording & transcript import
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3 opacity-60">
+            <Feature
+              icon={<Mic className="w-4 h-4" />}
+              title="Auto-import call recordings"
+              description="Sync completed call recordings and metadata automatically"
+            />
+            <Feature
+              icon={<FileText className="w-4 h-4" />}
+              title="Transcript import"
+              description="Pull full call transcripts and key moments into your timeline"
+            />
+            <Feature
+              icon={<Brain className="w-4 h-4" />}
+              title="AI-powered call analysis"
+              description="Extract stakeholder sentiment, objections, and action items"
+            />
+            <Feature
+              icon={<TrendingUp className="w-4 h-4" />}
+              title="Deal signal detection"
+              description="Identify buying signals and risk indicators from conversations"
             />
           </div>
         </div>

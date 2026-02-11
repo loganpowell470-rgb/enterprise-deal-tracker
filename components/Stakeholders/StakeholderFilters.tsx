@@ -1,6 +1,6 @@
 "use client";
 
-import { TEAMS, DEAL_ROLES, RELATIONSHIP_STRENGTHS, PRIORITIES } from "@/lib/types";
+import { DEAL_ROLES, RELATIONSHIP_STRENGTHS, PRIORITIES } from "@/lib/types";
 import { Search, X } from "lucide-react";
 
 interface Filters {
@@ -14,9 +14,10 @@ interface Filters {
 interface Props {
   filters: Filters;
   onChange: (filters: Filters) => void;
+  teams?: string[];
 }
 
-export default function StakeholderFilters({ filters, onChange }: Props) {
+export default function StakeholderFilters({ filters, onChange, teams }: Props) {
   const update = (key: keyof Filters, value: string) => {
     onChange({ ...filters, [key]: value });
   };
@@ -44,7 +45,7 @@ export default function StakeholderFilters({ filters, onChange }: Props) {
           className="px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
         >
           <option value="">All Teams</option>
-          {TEAMS.map((t) => (
+          {(teams || []).map((t) => (
             <option key={t} value={t}>
               {t}
             </option>

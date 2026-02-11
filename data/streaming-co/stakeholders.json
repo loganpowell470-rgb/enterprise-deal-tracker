@@ -8,8 +8,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-06",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["AI-driven personalization", "Platform scalability", "Reducing content discovery friction"],
-    "notes": "Primary executive sponsor. Drove the initial evaluation after seeing our demo at re:Invent. Personally championed the POC and presented results to the board. Very hands-on technical leader."
+    "keyPriorities": [
+      "AI-driven personalization",
+      "Platform scalability",
+      "Reducing content discovery friction"
+    ],
+    "notes": "Primary executive sponsor. Drove the initial evaluation after seeing our demo at re:Invent. Personally championed the POC and presented results to the board. Very hands-on technical leader.",
+    "reportsTo": null
   },
   {
     "id": "s2",
@@ -20,8 +25,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-07",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Content recommendation accuracy", "API integration simplicity", "Real-time processing"],
-    "notes": "Our strongest internal champion. Led the POC evaluation and authored the internal business case. Regularly advocates in leadership meetings. Has direct reports who would be primary users."
+    "keyPriorities": [
+      "Content recommendation accuracy",
+      "API integration simplicity",
+      "Real-time processing"
+    ],
+    "notes": "Our strongest internal champion. Led the POC evaluation and authored the internal business case. Regularly advocates in leadership meetings. Has direct reports who would be primary users.",
+    "reportsTo": "s1"
   },
   {
     "id": "s3",
@@ -32,8 +42,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-05",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Model accuracy benchmarks", "A/B testing framework", "ML pipeline integration"],
-    "notes": "Technical champion who validated our ML models against their internal benchmarks. Confirmed 23% engagement lift in POC. His team would own the day-to-day integration. Very enthusiastic."
+    "keyPriorities": [
+      "Model accuracy benchmarks",
+      "A/B testing framework",
+      "ML pipeline integration"
+    ],
+    "notes": "Technical champion who validated our ML models against their internal benchmarks. Confirmed 23% engagement lift in POC. His team would own the day-to-day integration. Very enthusiastic.",
+    "reportsTo": "s1"
   },
   {
     "id": "s4",
@@ -44,8 +59,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-03",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["ROI justification", "Cost per recommendation served", "3-year TCO comparison"],
-    "notes": "Reviewed the POC ROI analysis and was impressed with projected $15M incremental revenue. Asked detailed questions about scaling costs. Gave verbal approval for the budget allocation pending legal review."
+    "keyPriorities": [
+      "ROI justification",
+      "Cost per recommendation served",
+      "3-year TCO comparison"
+    ],
+    "notes": "Reviewed the POC ROI analysis and was impressed with projected $15M incremental revenue. Asked detailed questions about scaling costs. Gave verbal approval for the budget allocation pending legal review.",
+    "reportsTo": null
   },
   {
     "id": "s5",
@@ -56,8 +76,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-06",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["User experience impact", "Content discovery metrics", "Cross-platform consistency"],
-    "notes": "Third champion. Owns the product roadmap and has already slotted our integration into Q2 sprint planning. Shared detailed product requirements doc. Sees this as a key differentiator vs competitors."
+    "keyPriorities": [
+      "User experience impact",
+      "Content discovery metrics",
+      "Cross-platform consistency"
+    ],
+    "notes": "Third champion. Owns the product roadmap and has already slotted our integration into Q2 sprint planning. Shared detailed product requirements doc. Sees this as a key differentiator vs competitors.",
+    "reportsTo": "s1"
   },
   {
     "id": "s6",
@@ -68,8 +93,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-07",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["API latency requirements", "Model versioning", "Feature store compatibility"],
-    "notes": "Hands-on technical evaluator. Ran the POC integration and was very impressed with API performance (<50ms p99 latency). Already prototyping the production integration."
+    "keyPriorities": [
+      "API latency requirements",
+      "Model versioning",
+      "Feature store compatibility"
+    ],
+    "notes": "Hands-on technical evaluator. Ran the POC integration and was very impressed with API performance (<50ms p99 latency). Already prototyping the production integration.",
+    "reportsTo": "s3"
   },
   {
     "id": "s7",
@@ -80,8 +110,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-04",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["System reliability", "Data residency", "Deployment architecture"],
-    "notes": "Reviewed our architecture docs and approved the deployment approach. Comfortable with our multi-region setup. Offered to help with the production rollout plan."
+    "keyPriorities": [
+      "System reliability",
+      "Data residency",
+      "Deployment architecture"
+    ],
+    "notes": "Reviewed our architecture docs and approved the deployment approach. Comfortable with our multi-region setup. Offered to help with the production rollout plan.",
+    "reportsTo": "s1"
   },
   {
     "id": "s8",
@@ -92,8 +127,13 @@
     "priority": "P0",
     "lastContactDate": "2026-02-05",
     "relationshipStrength": "Neutral",
-    "keyPriorities": ["Data privacy compliance", "Content licensing implications", "AI liability terms"],
-    "notes": "Primary legal contact. Initially had concerns about AI-generated recommendations and liability. After reviewing our compliance documentation and meeting with our legal team, most concerns are addressed. Remaining item is finalizing the data processing addendum."
+    "keyPriorities": [
+      "Data privacy compliance",
+      "Content licensing implications",
+      "AI liability terms"
+    ],
+    "notes": "Primary legal contact. Initially had concerns about AI-generated recommendations and liability. After reviewing our compliance documentation and meeting with our legal team, most concerns are addressed. Remaining item is finalizing the data processing addendum.",
+    "reportsTo": null
   },
   {
     "id": "s9",
@@ -104,8 +144,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-03",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Content surfacing fairness", "Catalog coverage", "Licensing deal leverage"],
-    "notes": "Excited about better content discovery for the long tail of their catalog. Sees AI recommendations as leverage in licensing negotiations. Plans to use insights for content acquisition strategy."
+    "keyPriorities": [
+      "Content surfacing fairness",
+      "Catalog coverage",
+      "Licensing deal leverage"
+    ],
+    "notes": "Excited about better content discovery for the long tail of their catalog. Sees AI recommendations as leverage in licensing negotiations. Plans to use insights for content acquisition strategy.",
+    "reportsTo": "s2"
   },
   {
     "id": "s10",
@@ -116,8 +161,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-04",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Budget allocation timeline", "Vendor payment terms", "Contract flexibility"],
-    "notes": "Reports to Sandra Williams. Handles the operational finance side. Confirmed budget is available in Q2. Helped model the 3-year cost projection and is supportive of the investment."
+    "keyPriorities": [
+      "Budget allocation timeline",
+      "Vendor payment terms",
+      "Contract flexibility"
+    ],
+    "notes": "Reports to Sandra Williams. Handles the operational finance side. Confirmed budget is available in Q2. Helped model the 3-year cost projection and is supportive of the investment.",
+    "reportsTo": "s4"
   },
   {
     "id": "s11",
@@ -128,8 +178,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-06",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Recommendation explainability", "A/B test velocity", "Dashboard analytics"],
-    "notes": "Will be the primary PM managing the recommendation feature. Very engaged in requirements gathering. Already drafted user stories for the integration sprint."
+    "keyPriorities": [
+      "Recommendation explainability",
+      "A/B test velocity",
+      "Dashboard analytics"
+    ],
+    "notes": "Will be the primary PM managing the recommendation feature. Very engaged in requirements gathering. Already drafted user stories for the integration sprint.",
+    "reportsTo": "s5"
   },
   {
     "id": "s12",
@@ -140,8 +195,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-02",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["SOC2 compliance", "Data encryption standards", "Penetration test results"],
-    "notes": "Completed security review ahead of schedule. Approved our SOC2 Type II report and encryption standards. No outstanding security concerns. Very professional and thorough."
+    "keyPriorities": [
+      "SOC2 compliance",
+      "Data encryption standards",
+      "Penetration test results"
+    ],
+    "notes": "Completed security review ahead of schedule. Approved our SOC2 Type II report and encryption standards. No outstanding security concerns. Very professional and thorough.",
+    "reportsTo": "s7"
   },
   {
     "id": "s13",
@@ -152,8 +212,13 @@
     "priority": "P2",
     "lastContactDate": "2026-02-01",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Engagement metrics methodology", "Attribution modeling", "Reporting integration"],
-    "notes": "Provided the engagement metrics framework used in the POC evaluation. Confirmed the 23% lift measurement methodology is sound. Wants to build custom dashboards using our API."
+    "keyPriorities": [
+      "Engagement metrics methodology",
+      "Attribution modeling",
+      "Reporting integration"
+    ],
+    "notes": "Provided the engagement metrics framework used in the POC evaluation. Confirmed the 23% lift measurement methodology is sound. Wants to build custom dashboards using our API.",
+    "reportsTo": "s3"
   },
   {
     "id": "s14",
@@ -164,8 +229,13 @@
     "priority": "P1",
     "lastContactDate": "2026-02-03",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["Content strategy alignment", "Editorial quality preservation", "Creator relationships"],
-    "notes": "Initially cautious about AI recommendations impacting editorial curation. After seeing the POC results showing improved long-tail content discovery without diminishing premium content, became a strong supporter."
+    "keyPriorities": [
+      "Content strategy alignment",
+      "Editorial quality preservation",
+      "Creator relationships"
+    ],
+    "notes": "Initially cautious about AI recommendations impacting editorial curation. After seeing the POC results showing improved long-tail content discovery without diminishing premium content, became a strong supporter.",
+    "reportsTo": null
   },
   {
     "id": "s15",
@@ -176,7 +246,12 @@
     "priority": "P1",
     "lastContactDate": "2026-02-07",
     "relationshipStrength": "Strong",
-    "keyPriorities": ["API rate limits", "SDK quality", "Migration path"],
-    "notes": "Technical lead for the integration work. Reviewed our SDK documentation and gave positive feedback. Already submitted a PR for the initial API client wrapper in their codebase."
+    "keyPriorities": [
+      "API rate limits",
+      "SDK quality",
+      "Migration path"
+    ],
+    "notes": "Technical lead for the integration work. Reviewed our SDK documentation and gave positive feedback. Already submitted a PR for the initial API client wrapper in their codebase.",
+    "reportsTo": "s2"
   }
 ]
